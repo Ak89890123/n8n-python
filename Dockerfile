@@ -3,11 +3,18 @@ FROM n8nio/n8n:latest
 # 切換到 root 使用者
 USER root
 
-# 更新套件庫並安裝 Python
-RUN apk update && apk add --no-cache python3 py3-pip python3-dev
+# 安裝 Python 和基本套件
+RUN apk update && apk add --no-cache \
+    python3 \
+    py3-pip \
+    py3-numpy \
+    py3-pandas \
+    py3-requests \
+    py3-beautifulsoup4 \
+    py3-lxml
 
-# 安裝常用的 Python 套件
-RUN pip3 install --no-cache-dir numpy pandas requests beautifulsoup4 lxml
+# 設定 Python 環境變數
+ENV PYTHON_PATH=/usr/bin/python3
 
 # 切換回原本的使用者
 USER node
